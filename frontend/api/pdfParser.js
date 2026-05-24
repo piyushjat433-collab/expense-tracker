@@ -91,7 +91,10 @@ function extractTransactionsBroadSweep(text) {
     for (const pattern of DATE_PATTERNS) {
       const dm = rawDesc.match(pattern);
       if (dm) { date = normalizeDate(dm[1]); break; }
-    }: typeHint.toLowerCase().includes('dr') ? 'debit'
+    }
+    const description = rawDesc.replace(/\d{2}[-\/]\d{2}[-\/]\d{2,4}/g, '').trim();
+    if (!description || description.length < 3) continue;
+    const type = typeHint.toLowerCase().includes('cr') ? 'credit': typeHint.toLowerCase().includes('dr') ? 'debit'
       : determineType(rawDesc, description);
     transactions.push({
       id: uuidv4(), date,
@@ -167,6 +170,3 @@ async function parsePDF(buffer) {
 }
 
 module.exports = { parsePDF, generateDemoTransactions };
-    const description = rawDesc.replace(/\d{2}[-\/]\d{2}[-\/]\d{2,4}/g, '').trim();
-    if (!description || description.length < 3) continue;
-    const type = typeHint.toLowerCase().includes('cr') ? 'credit'
