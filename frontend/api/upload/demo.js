@@ -1,7 +1,7 @@
-const { generateDemoTransactions } = require('../pdfParser');
-const { buildSummary, generateAlerts } = require('../categorizer');
+import { generateDemoTransactions } from '../pdfParser.js';
+import { buildSummary, generateAlerts } from '../categorizer.js';
 
-module.exports.default = function handler(req, res) {
+export default function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'GET') return res.status(405).json({ success: false, error: 'Method not allowed' });
@@ -23,4 +23,4 @@ module.exports.default = function handler(req, res) {
       },
     },
   });
-};
+}
