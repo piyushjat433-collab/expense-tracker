@@ -1,13 +1,13 @@
-const { IncomingForm } = require('formidable');
-const fs = require('fs');
-const { parsePDF, generateDemoTransactions } = require('./pdfParser');
-const { buildSummary, generateAlerts } = require('./categorizer');
+import formidable from 'formidable';
+import fs from 'fs';
+import { parsePDF, generateDemoTransactions } from './pdfParser.js';
+import { buildSummary, generateAlerts } from './categorizer.js';
 
-module.exports.config = {
+export const config = {
   api: { bodyParser: false },
 };
 
-module.exports.default = async function handler(req, res) {
+export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -33,7 +33,7 @@ module.exports.default = async function handler(req, res) {
   }
 
   if (req.method === 'POST') {
-    const form = new IncomingForm({ maxFileSize: 10 * 1024 * 1024 });
+    const form = formidable({ maxFileSize: 10 * 1024 * 1024 });
     form.parse(req, async (err, fields, files) => {
       if (err) return res.status(400).json({ success: false, error: 'Upload failed: ' + err.message });
 
@@ -68,4 +68,4 @@ module.exports.default = async function handler(req, res) {
   }
 
   return res.status(405).json({ success: false, error: 'Method not allowed' });
-};
+}
