@@ -1,6 +1,6 @@
-import { CATEGORIES } from '../categorizer.js';
+const { CATEGORIES } = require('../categorizer.js');
 
-export default function handler(req, res) {
+module.exports = function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   if (req.method === 'OPTIONS') return res.status(200).end();
 
@@ -8,4 +8,4 @@ export default function handler(req, res) {
     name, icon: config.icon, color: config.color,
   }));
   return res.json({ success: true, data: categories });
-}
+};
