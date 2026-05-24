@@ -12,15 +12,8 @@ module.exports = function handler(req, res) {
 
   return res.json({
     success: true,
-    data: {
-      transactions, summary, alerts,
-      meta: {
-        fileName: 'HDFC_Statement_Demo.pdf',
-        fileSize: 245760,
-        pageCount: 3,
-        parsedAt: new Date().toISOString(),
-        isDemo: true,
-      },
+    data: { transactions, summary, alerts,
+      meta: { fileName: 'HDFC_Statement_Demo.pdf', fileSize: 245760, pageCount: 3, parsedAt: new Date().toISOString(), isDemo: true },
     },
   });
 };
